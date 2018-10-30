@@ -7,7 +7,16 @@
 
 
 #include "tester.h"
+#include "print_ts.h"
+#include <thread>
+#include <vector>
+#include <mutex>
 
+using namespace std;
+
+mutex m;
+
+vector<thread> threads;
 
 /*
  * starts cancelable threads
@@ -19,7 +28,12 @@
  */
 void startThreads(std::string s, int numThreads, WHICH_PRINT wp, int numTimesToPrint, int millisecond_delay)
 {
+	std::thread t1(PRINT1,s);
 
+	for(int i = 0; i < numThreads; i++)
+	{
+		threads.push_back(std::thread(PRINT1,s));
+	}
 }
 
 /*

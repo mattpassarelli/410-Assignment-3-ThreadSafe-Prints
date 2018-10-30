@@ -13,7 +13,7 @@ void PRINT1(std::string &txt)
 
 }
 
-void PRINT2(std::string &txt, std::string &txt1);
+void PRINT2(std::string &txt, std::string &txt1)
 {
 
 }
