@@ -43,7 +43,7 @@ all: Project\ 3\ Thread
 Project\ 3\ Thread: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -Xlinker -pthread -o "Project 3 Thread" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "Project 3 Thread" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
