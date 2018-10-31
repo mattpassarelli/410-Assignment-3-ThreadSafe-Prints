@@ -11,27 +11,54 @@
 #include <vector>
 #include <mutex>
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
 mutex m;
 
 vector<thread> threads;
+bool areCancelled = false;
 
 void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 		int millisecond_delay) {
 
 	switch (wp) {
 	case P1:
-		cout<<"going to PRINT1"<<endl;
+		for (int i = 0; i < numTimesToPrint; i++) {
+			//wait for the certain delay to go ahead and print
+			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
+			if (!areCancelled) {
+				m.lock();
+				PRINT1(s);
+				m.unlock();
+			} else if (areCancelled) {
+				m.lock();
+				s = USER_CHOSE_TO_CANCEL;
+				PRINT1(s);
+				m.unlock();
+			}
+		}
 		break;
 	case P2:
+		for (int i = 0; i < numTimesToPrint; i++) {
+
+		}
 		break;
 	case P3:
+		for (int i = 0; i < numTimesToPrint; i++) {
+
+		}
 		break;
 	case P4:
+		for (int i = 0; i < numTimesToPrint; i++) {
+
+		}
 		break;
 	case P5:
+		for (int i = 0; i < numTimesToPrint; i++) {
+
+		}
 		break;
 	}
 }
@@ -58,7 +85,11 @@ void startThreads(std::string s, int numThreads, WHICH_PRINT wp,
  * if false then just reset logic used to cancel threads
  */
 void setCancelThreads(bool bCancel) {
-
+	if (bCancel) {
+		areCancelled = true;
+	} else {
+		areCancelled = false;
+	}
 }
 
 /*
