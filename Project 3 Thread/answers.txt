@@ -1,0 +1,5 @@
+1)Ideally, you'll want as many threads as processes you need to be run in parallel. But you are still limited to the amount of threads
+your processor has.
+
+2)If you were to call more processes than threads you can support at once, it'll cause some processes to be queued, causing some to not run
+in parallel until a thread is free
