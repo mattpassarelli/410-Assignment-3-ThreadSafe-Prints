@@ -15,9 +15,6 @@
 
 using namespace std;
 
-mutex m;
-
-
 vector<thread> threads;
 bool areCancelled = false;
 
@@ -45,14 +42,11 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
 			//otherwise, if false, we print as normal
 			if (!areCancelled) {
-				m.lock();
 				PRINT1(s);
-				m.unlock();
 			} else if (areCancelled) {
-				m.lock();
 				s = USER_CHOSE_TO_CANCEL;
 				PRINT1(s);
-				m.unlock();
+
 			}
 		}
 		break;
@@ -64,14 +58,11 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
 			//otherwise, if false, we print as normal
 			if (!areCancelled) {
-				m.lock();
 				PRINT2(s, s);
-				m.unlock();
 			} else if (areCancelled) {
-				m.lock();
 				s = USER_CHOSE_TO_CANCEL;
 				PRINT2(s, s);
-				m.unlock();
+
 			}
 		}
 		break;
@@ -84,14 +75,11 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
 			//otherwise, if false, we print as normal
 			if (!areCancelled) {
-				m.lock();
 				PRINT3(s, s, s);
-				m.unlock();
 			} else if (areCancelled) {
-				m.lock();
 				s = USER_CHOSE_TO_CANCEL;
 				PRINT3(s, s, s);
-				m.unlock();
+
 			}
 		}
 		break;
@@ -103,14 +91,10 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
 			//otherwise, if false, we print as normal
 			if (!areCancelled) {
-				m.lock();
 				PRINT4(s, s, s, s);
-				m.unlock();
 			} else if (areCancelled) {
-				m.lock();
 				s = USER_CHOSE_TO_CANCEL;
 				PRINT4(s, s, s, s);
-				m.unlock();
 			}
 		}
 		break;
@@ -122,14 +106,10 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
 			//otherwise, if false, we print as normal
 			if (!areCancelled) {
-				m.lock();
 				PRINT5(s, s, s, s, s);
-				m.unlock();
 			} else if (areCancelled) {
-				m.lock();
 				s = USER_CHOSE_TO_CANCEL;
 				PRINT5(s, s, s, s, s);
-				m.unlock();
 			}
 		}
 		break;
