@@ -9,8 +9,6 @@
 #include "print_ts.h"
 #include <thread>
 #include <vector>
-#include <mutex>
-#include <iostream>
 #include <chrono>
 
 using namespace std;
@@ -25,95 +23,51 @@ bool areCancelled = false;
  * or
  * 2) Use a switch statement in the startThreads and then have 5 helper functions lol
  *
+ *--------------------I fixed this :)-------------------------
  * EVEN WORSE, is that I have to repeat code in each case because if I try to consolidate it into a single function
  * that can pick all 5 PRINT functions, it'll require ANOTHER switch statement and would be just as messy looking
  *
  * Will work on it though :/
+ *--------------------I fixed this :)-------------------------
+ *
+ * So turns out, my dumbass is just dumb and needed to think some more about how to consolidate the code.
+ * I would have left the old code commented out, but it honestly took up so much space, it wasn't worth the KB of storage needed lol.
  */
 void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 		int millisecond_delay) {
 
-	switch (wp) {
-	case P1:
-		for (int i = 0; i < numTimesToPrint; i++) {
-			//wait for the certain delay to go ahead and print
-			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
+	for (int i = 0; i < numTimesToPrint; i++) {
 
-			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
-			//otherwise, if false, we print as normal
-			if (!areCancelled) {
-				PRINT1(s);
-			} else if (areCancelled) {
-				s = USER_CHOSE_TO_CANCEL;
-				PRINT1(s);
-
-			}
+		if (areCancelled) {
+			s = USER_CHOSE_TO_CANCEL;
 		}
-		break;
-	case P2:
-		for (int i = 0; i < numTimesToPrint; i++) {
-			//wait for the certain delay to go ahead and print
-			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
 
-			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
-			//otherwise, if false, we print as normal
-			if (!areCancelled) {
-				PRINT2(s, s);
-			} else if (areCancelled) {
-				s = USER_CHOSE_TO_CANCEL;
-				PRINT2(s, s);
-
-			}
+		switch (wp) {
+		case P1:
+			PRINT1(s);
+			break;
+		case P2:
+			PRINT2(s, s);
+			break;
+		case P3:
+			PRINT3(s, s, s);
+			break;
+		case P4:
+			PRINT4(s, s, s, s);
+			break;
+		case P5:
+			PRINT5(s, s, s, s, s);
+			break;
 		}
-		break;
 
-	case P3:
-		for (int i = 0; i < numTimesToPrint; i++) {
-			//wait for the certain delay to go ahead and print
-			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
-
-			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
-			//otherwise, if false, we print as normal
-			if (!areCancelled) {
-				PRINT3(s, s, s);
-			} else if (areCancelled) {
-				s = USER_CHOSE_TO_CANCEL;
-				PRINT3(s, s, s);
-
-			}
-		}
-		break;
-	case P4:
-		for (int i = 0; i < numTimesToPrint; i++) {
-			//wait for the certain delay to go ahead and print
-			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
-
-			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
-			//otherwise, if false, we print as normal
-			if (!areCancelled) {
-				PRINT4(s, s, s, s);
-			} else if (areCancelled) {
-				s = USER_CHOSE_TO_CANCEL;
-				PRINT4(s, s, s, s);
-			}
-		}
-		break;
-	case P5:
-		for (int i = 0; i < numTimesToPrint; i++) {
-			//wait for the certain delay to go ahead and print
-			this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
-
-			//if the threads are set to cancel, reset the String to print to USER_CHOSE_TO_CANCEL
-			//otherwise, if false, we print as normal
-			if (!areCancelled) {
-				PRINT5(s, s, s, s, s);
-			} else if (areCancelled) {
-				s = USER_CHOSE_TO_CANCEL;
-				PRINT5(s, s, s, s, s);
-			}
-		}
-		break;
+		//wait for the certain delay to go ahead and print
+		this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
 	}
+	if(areCancelled)
+	{
+		exit(EXIT_SUCCESS);
+	}
+
 }
 
 /*
