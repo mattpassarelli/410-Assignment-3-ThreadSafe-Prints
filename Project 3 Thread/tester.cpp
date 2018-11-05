@@ -10,11 +10,15 @@
 #include <thread>
 #include <vector>
 #include <chrono>
+#include <iostream>
+#include <mutex>
 
 using namespace std;
 
 vector<thread> threads;
 bool areCancelled = false;
+
+mutex mut;
 
 /*
  * This is supposed to be a helper function so we can call the needed PRINT function in print_ts.cpp
@@ -38,9 +42,14 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 
 	for (int i = 0; i < numTimesToPrint; i++) {
 
+		//lock the thread just so multiple threads aren't trying to
+		//check at the same time
+		mut.lock();
 		if (areCancelled) {
 			s = USER_CHOSE_TO_CANCEL;
+			mut.unlock();
 		}
+		mut.unlock();
 
 		switch (wp) {
 		case P1:
@@ -63,11 +72,6 @@ void func(std::string s, WHICH_PRINT wp, int numTimesToPrint,
 		//wait for the certain delay to go ahead and print
 		this_thread::sleep_for(chrono::milliseconds(millisecond_delay));
 	}
-	if(areCancelled)
-	{
-		exit(EXIT_SUCCESS);
-	}
-
 }
 
 /*

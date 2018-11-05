@@ -20,11 +20,11 @@ int main() {
 	string s4 = "AHHHHH";
 	string s5 = "Touchdown";
 
-	startThreads(s1, 1, P1, 1, 400);
-	startThreads(s2, 1, P2, 1, 200);
-	startThreads(s3, 1, P3, 1, 100);
-	startThreads(s4, 1, P4, 1, 100);
-	startThreads(s5, 1, P5, 10, 500);
+	startThreads(s1, 1, P1, 2, 200);
+	startThreads(s2, 1, P2, 2, 200);
+	startThreads(s3, 1, P3, 2, 200);
+	startThreads(s4, 1, P4, 2, 200);
+	startThreads(s5, 1, P5, 10, 200);
 
 	this_thread::sleep_for(chrono::milliseconds(500));
 	setCancelThreads(true);
